@@ -1,0 +1,5 @@
+# Schema for the theme setting configuration file of the Bootstrap Klim theme.
+
+bootstrap_klim.settings:
+  type: theme_settings
+  label: 'Bootstrap Klim settings'

@@ -1,0 +1,53 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * {{ dump(rows[0].content['#row'].tid) }}
+ * {{ breakpoint() }}
+ * {{ view.style_plugin.getField(key, 'field_video') }}
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+{% for row in rows %}
+  {%
+    set row_classes = [
+      default_row_class ? 'views-row',
+    ]
+  %}
+  <div{{ row.attributes.addClass(row_classes) }} >
+    <div class="item">
+      <div class="imagen">{{ view.style_plugin.getField(loop.index0, 'field_dsu_image') }}</div>
+      <div class="info" style="background:{{ view.style_plugin.getField(loop.index0, 'field_color_code')|striptags|trim }}; color:{{ view.style_plugin.getField(loop.index0, 'field_font_color')|striptags|trim }};">
+        <div class="voto">
+          <div class="abbreviatura">{{ view.style_plugin.getField(loop.index0, 'field_category_abbreviation') }}</div>
+          <div class="estrellas">{{ view.style_plugin.getField(loop.index0, 'field_dsu_ratings') }}</div>
+          <div class="favorito">
+            <div class="heart"><i class="far fa-heart"></i></div>
+            {{ view.style_plugin.getField(loop.index0, 'link_flag') }}
+          </div>
+        </div>
+        <div class="titulo"> {{ view.style_plugin.getField(loop.index0, 'title') }}</div>
+        <div class="text"> {{ view.style_plugin.getField(loop.index0, 'body') }}</div>
+      </div>
+    </div>
+    {# {{- row.content -}} #}
+    </div>
+
+{% endfor %}

@@ -1,0 +1,61 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a view of unformatted rows.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's row items.
+ *   - attributes: The row's HTML attributes.
+ *   - content: The row's content.
+ * - view: The view object.
+ * - default_row_class: A flag indicating whether default classes should be
+ *   used on rows.
+ *
+ * @see template_preprocess_views_view_unformatted()
+ *
+ * {{ dump(rows[0].content['#row'].tid) }}
+ * {{ breakpoint() }}
+ * {{ view.style_plugin.getField(key, 'field_video') }}
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+{% for row in rows %}
+  {%
+    set row_classes = [
+      default_row_class ? 'views-row',
+    ]
+  %}
+  <div{{ row.attributes.addClass(row_classes) }} >
+
+
+      <div class="item">
+        <div class="content-item">
+          <div class="col-sm-6 wrapper-img-section imagen  image-{{ view.style_plugin.getField(loop.index0, 'field_history_image_position')|striptags|trim }}">
+            {{ view.style_plugin.getField(loop.index0, 'field_history_image') }}
+          </div>
+          <div class="col-sm-6 wrapper-description-section" style="background-image:url('{{ view.style_plugin.getField(loop.index0, 'field_history_image_background_1')|striptags|trim }})'"; >
+            <div class="info" style="background:{{ view.style_plugin.getField(loop.index0, 'field_color_code')|striptags|trim }}; color:{{ view.style_plugin.getField(loop.index0, 'field_font_color')|striptags|trim }};">
+              <div class="background"> {{ view.style_plugin.getField(loop.index0, 'field_history_image_background') }}</div>
+              <div class="text">
+                <div class="title"> {{ view.style_plugin.getField(loop.index0, 'title') }}</div>
+                <div class="body"> {{ view.style_plugin.getField(loop.index0, 'body') }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="logo">
+          {{ view.style_plugin.getField(loop.index0, 'field_history_logo') }}
+        </div>
+      </div>
+
+
+      {#{{- row.content -}}#}
+
+  </div>
+{% endfor %}
